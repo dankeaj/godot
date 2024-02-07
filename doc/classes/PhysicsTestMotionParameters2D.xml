@@ -8,6 +8,21 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="create" qualifiers="static">
+			<return type="PhysicsTestMotionParameters2D" />
+			<param index="0" name="motion" type="Vector2" />
+			<param index="1" name="exclude_bodies" type="RID[]" default="[]" />
+			<param index="2" name="exclude_objects" type="int[]" default="[]" />
+			<description>
+				Returns a new, pre-configured [PhysicsTestMotionParameters2D] object. Use it to quickly create query parameters using the most common options.
+				[codeblock]
+				var query = PhysicsTestMotionParameters2D.create(Vector2.UP)
+				var result = PhysicsServer2D.body_test_motion(RID(self), query)
+				[/codeblock]
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="collide_separation_ray" type="bool" setter="set_collide_separation_ray_enabled" getter="is_collide_separation_ray_enabled" default="false">
 			If set to [code]true[/code], shapes of type [constant PhysicsServer2D.SHAPE_SEPARATION_RAY] are used to detect collisions and can stop the motion. Can be useful when snapping to the ground.

@@ -8,6 +8,21 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="create" qualifiers="static">
+			<return type="PhysicsPointQueryParameters2D" />
+			<param index="0" name="position" type="Vector2" />
+			<param index="1" name="collision_mask" type="int" default="4294967295" />
+			<param index="2" name="exclude" type="RID[]" default="[]" />
+			<description>
+				Returns a new, pre-configured [PhysicsPointQueryParameters2D] object. Use it to quickly create query parameters using the most common options.
+				[codeblock]
+				var query = PhysicsPointQueryParameters2D.create(global_position)
+				var collision = get_world_2d().direct_space_state.intersect_point(query)
+				[/codeblock]
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="canvas_instance_id" type="int" setter="set_canvas_instance_id" getter="get_canvas_instance_id" default="0">
 			If different from [code]0[/code], restricts the query to a specific canvas layer specified by its instance ID. See [method Object.get_instance_id].

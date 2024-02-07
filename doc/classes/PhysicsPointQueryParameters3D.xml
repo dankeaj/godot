@@ -8,6 +8,21 @@
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="create" qualifiers="static">
+			<return type="PhysicsPointQueryParameters3D" />
+			<param index="0" name="position" type="Vector3" />
+			<param index="1" name="collision_mask" type="int" default="4294967295" />
+			<param index="2" name="exclude" type="RID[]" default="[]" />
+			<description>
+				Returns a new, pre-configured [PhysicsPointQueryParameters3D] object. Use it to quickly create query parameters using the most common options.
+				[codeblock]
+				var query = PhysicsPointQueryParameters3D.create(global_position)
+				var collision = get_world_3d().direct_space_state.intersect_point(query)
+				[/codeblock]
+			</description>
+		</method>
+	</methods>
 	<members>
 		<member name="collide_with_areas" type="bool" setter="set_collide_with_areas" getter="is_collide_with_areas_enabled" default="false">
 			If [code]true[/code], the query will take [Area3D]s into account.

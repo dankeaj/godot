@@ -656,6 +656,7 @@ protected:
 	static void _bind_methods();
 
 public:
+	static Ref<PhysicsPointQueryParameters2D> create(Vector2 p_position, uint32_t p_mask, const TypedArray<RID> &p_exclude);
 	const PhysicsDirectSpaceState2D::PointParameters &get_parameters() const { return parameters; }
 
 	void set_position(const Vector2 &p_position) { parameters.position = p_position; }
@@ -688,6 +689,7 @@ protected:
 	static void _bind_methods();
 
 public:
+	static Ref<PhysicsShapeQueryParameters2D> create(const Ref<Resource> p_shape_ref, uint32_t p_mask, const TypedArray<RID>& p_exclude);
 	const PhysicsDirectSpaceState2D::ShapeParameters &get_parameters() const { return parameters; }
 
 	void set_shape(const Ref<Resource> &p_shape_ref);
@@ -727,6 +729,7 @@ protected:
 	static void _bind_methods();
 
 public:
+	static Ref<PhysicsTestMotionParameters2D> create(Vector2 p_motion, const TypedArray<RID>& p_bodies, const TypedArray<uint64_t>& p_objects);
 	const PhysicsServer2D::MotionParameters &get_parameters() const { return parameters; }
 
 	const Transform2D &get_from() const { return parameters.from; }

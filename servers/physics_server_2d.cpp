@@ -212,6 +212,15 @@ void PhysicsRayQueryParameters2D::_bind_methods() {
 
 ///////////////////////////////////////////////////////
 
+Ref<PhysicsPointQueryParameters2D> PhysicsPointQueryParameters2D::create(Vector2 p_position, uint32_t p_mask, const TypedArray<RID> &p_exclude) {
+	Ref<PhysicsPointQueryParameters2D> params;
+	params.instantiate();
+	params->set_position(p_position);
+	params->set_collision_mask(p_mask);
+	params->set_exclude(p_exclude);
+	return params;
+}
+
 void PhysicsPointQueryParameters2D::set_exclude(const TypedArray<RID> &p_exclude) {
 	parameters.exclude.clear();
 	for (int i = 0; i < p_exclude.size(); i++) {
@@ -230,6 +239,8 @@ TypedArray<RID> PhysicsPointQueryParameters2D::get_exclude() const {
 }
 
 void PhysicsPointQueryParameters2D::_bind_methods() {
+	ClassDB::bind_static_method("PhysicsPointQueryParameters2D", D_METHOD("create", "position", "collision_mask", "exclude"), &PhysicsPointQueryParameters2D::create, DEFVAL(UINT32_MAX), DEFVAL(TypedArray<RID>()));
+
 	ClassDB::bind_method(D_METHOD("set_position", "position"), &PhysicsPointQueryParameters2D::set_position);
 	ClassDB::bind_method(D_METHOD("get_position"), &PhysicsPointQueryParameters2D::get_position);
 
@@ -257,6 +268,15 @@ void PhysicsPointQueryParameters2D::_bind_methods() {
 }
 
 ///////////////////////////////////////////////////////
+
+Ref<PhysicsShapeQueryParameters2D> PhysicsShapeQueryParameters2D::create(const Ref<Resource> p_shape_ref, uint32_t p_mask, const TypedArray<RID> &p_exclude) {
+	Ref<PhysicsShapeQueryParameters2D> params;
+	params.instantiate();
+	params->set_shape(p_shape_ref);
+	params->set_collision_mask(p_mask);
+	params->set_exclude(p_exclude);
+	return params;
+}
 
 void PhysicsShapeQueryParameters2D::set_shape(const Ref<Resource> &p_shape_ref) {
 	ERR_FAIL_COND(p_shape_ref.is_null());
@@ -289,6 +309,8 @@ TypedArray<RID> PhysicsShapeQueryParameters2D::get_exclude() const {
 }
 
 void PhysicsShapeQueryParameters2D::_bind_methods() {
+	ClassDB::bind_static_method("PhysicsShapeQueryParameters2D", D_METHOD("create", "shape", "collision_mask", "exclude"), &PhysicsShapeQueryParameters2D::create, DEFVAL(UINT32_MAX), DEFVAL(TypedArray<RID>()));
+
 	ClassDB::bind_method(D_METHOD("set_shape", "shape"), &PhysicsShapeQueryParameters2D::set_shape);
 	ClassDB::bind_method(D_METHOD("get_shape"), &PhysicsShapeQueryParameters2D::get_shape);
 
@@ -463,6 +485,15 @@ void PhysicsDirectSpaceState2D::_bind_methods() {
 
 ///////////////////////////////
 
+Ref<PhysicsTestMotionParameters2D> PhysicsTestMotionParameters2D::create(Vector2 p_motion, const TypedArray<RID>& p_bodies, const TypedArray<uint64_t>& p_objects) {
+	Ref<PhysicsTestMotionParameters2D> params;
+	params.instantiate();
+	params->set_motion(p_motion);
+	params->set_exclude_bodies(p_bodies);
+	params->set_exclude_objects(p_objects);
+	return params;
+}
+
 TypedArray<RID> PhysicsTestMotionParameters2D::get_exclude_bodies() const {
 	TypedArray<RID> exclude;
 	exclude.resize(parameters.exclude_bodies.size());
@@ -504,6 +535,8 @@ void PhysicsTestMotionParameters2D::set_exclude_objects(const TypedArray<uint64_
 }
 
 void PhysicsTestMotionParameters2D::_bind_methods() {
+	ClassDB::bind_static_method("PhysicsTestMotionParameters2D", D_METHOD("create", "motion", "exclude_bodies", "exclude_objects"), &PhysicsTestMotionParameters2D::create, DEFVAL(TypedArray<RID>()), DEFVAL(TypedArray<uint64_t>()));
+
 	ClassDB::bind_method(D_METHOD("get_from"), &PhysicsTestMotionParameters2D::get_from);
 	ClassDB::bind_method(D_METHOD("set_from", "from"), &PhysicsTestMotionParameters2D::set_from);
 

@@ -174,6 +174,16 @@ PhysicsDirectBodyState3D::PhysicsDirectBodyState3D() {}
 
 ///////////////////////////////////////////////////////
 
+Ref<PhysicsRayQueryParameters3D> PhysicsRayQueryParameters3D::create(Vector3 p_from, Vector3 p_to, uint32_t p_mask, const TypedArray<RID>& p_exclude) {
+	Ref<PhysicsRayQueryParameters3D> params;
+	params.instantiate();
+	params->set_from(p_from);
+	params->set_to(p_to);
+	params->set_collision_mask(p_mask);
+	params->set_exclude(p_exclude);
+	return params;
+}
+
 void PhysicsRayQueryParameters3D::set_exclude(const TypedArray<RID> &p_exclude) {
 	parameters.exclude.clear();
 	for (int i = 0; i < p_exclude.size(); i++) {
@@ -230,11 +240,10 @@ void PhysicsRayQueryParameters3D::_bind_methods() {
 
 ///////////////////////////////////////////////////////
 
-Ref<PhysicsRayQueryParameters3D> PhysicsRayQueryParameters3D::create(Vector3 p_from, Vector3 p_to, uint32_t p_mask, const TypedArray<RID> &p_exclude) {
-	Ref<PhysicsRayQueryParameters3D> params;
+Ref<PhysicsPointQueryParameters3D> PhysicsPointQueryParameters3D::create(Vector3 p_position, uint32_t p_mask, const TypedArray<RID>& p_exclude) {
+	Ref<PhysicsPointQueryParameters3D> params;
 	params.instantiate();
-	params->set_from(p_from);
-	params->set_to(p_to);
+	params->set_position(p_position);
 	params->set_collision_mask(p_mask);
 	params->set_exclude(p_exclude);
 	return params;
@@ -258,6 +267,8 @@ TypedArray<RID> PhysicsPointQueryParameters3D::get_exclude() const {
 }
 
 void PhysicsPointQueryParameters3D::_bind_methods() {
+	ClassDB::bind_static_method("PhysicsPointQueryParameters3D", D_METHOD("create", "position", "collision_mask", "exclude"), &PhysicsPointQueryParameters3D::create, DEFVAL(UINT32_MAX), DEFVAL(TypedArray<RID>()));
+
 	ClassDB::bind_method(D_METHOD("set_position", "position"), &PhysicsPointQueryParameters3D::set_position);
 	ClassDB::bind_method(D_METHOD("get_position"), &PhysicsPointQueryParameters3D::get_position);
 
@@ -281,6 +292,15 @@ void PhysicsPointQueryParameters3D::_bind_methods() {
 }
 
 ///////////////////////////////////////////////////////
+
+Ref<PhysicsShapeQueryParameters3D> PhysicsShapeQueryParameters3D::create(const Ref<Resource> p_shape_ref, uint32_t p_mask, const TypedArray<RID>& p_exclude) {
+	Ref<PhysicsShapeQueryParameters3D> params;
+	params.instantiate();
+	params->set_shape(p_shape_ref);
+	params->set_collision_mask(p_mask);
+	params->set_exclude(p_exclude);
+	return params;
+}
 
 void PhysicsShapeQueryParameters3D::set_shape(const Ref<Resource> &p_shape_ref) {
 	ERR_FAIL_COND(p_shape_ref.is_null());
@@ -313,6 +333,8 @@ TypedArray<RID> PhysicsShapeQueryParameters3D::get_exclude() const {
 }
 
 void PhysicsShapeQueryParameters3D::_bind_methods() {
+	ClassDB::bind_static_method("PhysicsShapeQueryParameters3D", D_METHOD("create", "shape", "collision_mask", "exclude"), &PhysicsShapeQueryParameters3D::create, DEFVAL(UINT32_MAX), DEFVAL(TypedArray<RID>()));
+
 	ClassDB::bind_method(D_METHOD("set_shape", "shape"), &PhysicsShapeQueryParameters3D::set_shape);
 	ClassDB::bind_method(D_METHOD("get_shape"), &PhysicsShapeQueryParameters3D::get_shape);
 
@@ -488,6 +510,15 @@ void PhysicsDirectSpaceState3D::_bind_methods() {
 
 ///////////////////////////////
 
+Ref<PhysicsTestMotionParameters3D> PhysicsTestMotionParameters3D::create(Vector3 p_motion, const TypedArray<RID>& p_bodies, const TypedArray<uint64_t>& p_objects) {
+	Ref<PhysicsTestMotionParameters3D> params;
+	params.instantiate();
+	params->set_motion(p_motion);
+	params->set_exclude_bodies(p_bodies);
+	params->set_exclude_objects(p_objects);
+	return params;
+}
+
 TypedArray<RID> PhysicsTestMotionParameters3D::get_exclude_bodies() const {
 	TypedArray<RID> exclude;
 	exclude.resize(parameters.exclude_bodies.size());
@@ -529,6 +560,8 @@ void PhysicsTestMotionParameters3D::set_exclude_objects(const TypedArray<uint64_
 }
 
 void PhysicsTestMotionParameters3D::_bind_methods() {
+	ClassDB::bind_static_method("PhysicsTestMotionParameters3D", D_METHOD("create", "motion", "exclude_bodies", "exclude_objects"), &PhysicsTestMotionParameters3D::create, DEFVAL(TypedArray<RID>()), DEFVAL(TypedArray<uint64_t>()));
+
 	ClassDB::bind_method(D_METHOD("get_from"), &PhysicsTestMotionParameters3D::get_from);
 	ClassDB::bind_method(D_METHOD("set_from", "from"), &PhysicsTestMotionParameters3D::set_from);
 
